@@ -53,6 +53,14 @@
             android:layout_marginTop="12dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/dynamic_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@id/app_header"
+        android:layout_below="@id/app_footer"/>
+
     <LinearLayout
         android:id="@+id/app_footer"
         android:layout_width="match_parent"
@@ -72,14 +80,14 @@
         <ImageView
             android:id="@+id/app_footer_scan"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
 
             android:src="@drawable/homepage_scan"/>
         <ImageView
             android:id="@+id/app_footer_home"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
 
             android:src="@drawable/homepage_icon"/>
@@ -87,7 +95,7 @@
         <ImageView
             android:id="@+id/app_footer_history"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_weight="1"
 
             android:src="@drawable/homepage_history"/>
