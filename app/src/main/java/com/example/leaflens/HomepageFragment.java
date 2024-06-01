@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class HomepageFragment extends Fragment {
 
     ListView updateListView;
     ArrayList<String> updateList;
+    TextView noUpdateTextView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -71,8 +73,8 @@ public class HomepageFragment extends Fragment {
         updateListView = view.findViewById(R.id.homepage_expert_update_ListView);
         TextView noUpdateText = view.findViewById(R.id.homepage_expert_noUpdate_text);
 
-        updateList = new ArrayList<>();
 
+        updateList = new ArrayList<>();
         if(updateList.size() == 0)
         {
             updateListView.setVisibility(View.INVISIBLE);
