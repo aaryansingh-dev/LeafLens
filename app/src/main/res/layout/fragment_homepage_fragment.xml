@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomepageFragment"
+
+    android:background="@color/background_grey">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:background="@drawable/rounded_edit_text"
+
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/search_icon"
+
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <EditText
+                android:id="@+id/homepage_search_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@null"
+                android:hint="Enter disease name"
+                android:inputType="text"
+
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+            
+            <ImageView
+                android:id="@+id/homepage_left_image"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintWidth_percent="0.5"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/homepage_left_img"
+                />
+            <ImageView
+                android:id="@+id/homepage_right_image"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintWidth_percent="0.5"
+
+                app:layout_constraintStart_toEndOf="@id/homepage_left_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                android:src="@drawable/homepage_right_img"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/homepage_motto_statementView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/homepage_motto_statement"
+            android:textStyle="bold"
+            android:textSize="17sp"
+
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+
+            android:background="@drawable/rounded_bg_transparent">
+            <LinearLayout
+                android:id="@+id/homepage_expert_update_titleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="10">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+
+                    android:text="@string/homepage_update_title"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+
+                    android:layout_marginStart="10dp"
+                    />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="2"
+
+                    android:src="@drawable/updates_bell"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/homepage_expert_update_ListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/homepage_expert_update_titleLayout"
+                app:layout_constraintStart_toStartOf="parent"
+
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/homepage_expert_noUpdate_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:maxHeight="250dp"
+                android:visibility="invisible"
+
+                app:layout_constraintTop_toBottomOf="@id/homepage_expert_update_titleLayout"
+                app:layout_constraintStart_toStartOf="parent"
+
+                android:text="No Updates for you!"
+                android:textSize="15sp"
+                android:gravity="center"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

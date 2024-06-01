@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LeafLens</string>
+    <string name="App_Name">LeafLens</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="homepage_motto_statement">Our aim is to help farmers and home gardeners grow healthier plants</string>
+    <string name="homepage_update_title">Updates from experts!</string>
 </resources>
