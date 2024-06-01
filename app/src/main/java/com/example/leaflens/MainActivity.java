@@ -1,10 +1,19 @@
 package com.example.leaflens;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.media.Image;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+
+    ImageView menuProfile;
+    DrawerLayout navigationDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,5 +26,25 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
 
+        menuProfile = findViewById(R.id.app_header_profileImage);
+        navigationDrawer = findViewById(R.id.navigation_menu_drawerLayout);
+        setMenuClickListerner(menuProfile);
+    }
+
+    private void setMenuClickListerner(ImageView imageButton)
+    {
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(navigationDrawer.isDrawerOpen(GravityCompat.START))
+                {
+                    navigationDrawer.closeDrawer(GravityCompat.START);
+                }
+                else
+                {
+                    navigationDrawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
     }
 }
