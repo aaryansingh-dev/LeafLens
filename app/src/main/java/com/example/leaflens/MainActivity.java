@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         menuProfile = findViewById(R.id.app_header_profileImage);
         navigationDrawer = findViewById(R.id.navigation_menu_drawerLayout);
-        setMenuClickListerner(menuProfile);
+        setMenuClickListener(menuProfile);
 
     }
 
-    private void setMenuClickListerner(ImageView imageButton)
+    private void setMenuClickListener(ImageView imageButton)
     {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
