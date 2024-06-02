@@ -9,27 +9,28 @@
     android:id="@+id/navigation_menu_drawerLayout"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
 
-        android:background="@color/background_grey">
+        android:background="@color/background_grey"
+
+        android:weightSum="10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/app_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#61BF51"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:background="#61BF51">
 
 
             <ImageView
                 android:id="@+id/app_header_profileImage"
                 android:layout_width="50dp"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.7"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +38,7 @@
                 android:src="@drawable/profile_image"
 
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -54,7 +55,8 @@
                 android:textStyle="bold"
 
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -72,19 +74,14 @@
         <FrameLayout
             android:id="@+id/dynamic_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintTop_toBottomOf="@id/app_header"
-            app:layout_constraintBottom_toTopOf="@id/app_footer"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="0dp"
+            android:layout_weight="8.5"/>
 
         <LinearLayout
             android:id="@+id/app_footer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
 
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
@@ -119,12 +116,38 @@
 
                 android:src="@drawable/homepage_history"/>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_View"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:maxWidth="200dp"
         android:layout_gravity="start"
         app:menu="@menu/navigation_menu"
-        app:headerLayout="@layout/navigation_menu_header"/>
+        app:headerLayout="@layout/navigation_menu_header">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Developed by"
+                android:textSize="15sp"
+                android:layout_margin="2sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/owner_name"
+                android:textSize="15sp"
+                android:layout_margin="2sp"/>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

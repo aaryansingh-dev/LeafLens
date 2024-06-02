@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuOptions.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Settings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/settings_NameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/settings_NameView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="Name"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/settings_NameEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:hint="John Doe"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:lines="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_emailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/settings_emailView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="Email id"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/settings_EmailEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:hint="johndoe@email.com"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:lines="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/settings_DOBLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/settings_DOBView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:text="Date of Birth"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/settings_DOBEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:hint="DD/MM/YYYY"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:lines="1"
+
+                android:paddingStart="5dp"
+                android:background="@drawable/rounded_bg_transparent"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
