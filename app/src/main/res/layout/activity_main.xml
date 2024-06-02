@@ -9,21 +9,21 @@
     android:id="@+id/navigation_menu_drawerLayout"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
 
-        android:background="@color/background_grey">
+        android:background="@color/background_grey"
+
+        android:weightSum="10">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/app_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#61BF51"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:background="#61BF51">
 
 
             <ImageView
@@ -72,19 +72,14 @@
         <FrameLayout
             android:id="@+id/dynamic_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintTop_toBottomOf="@id/app_header"
-            app:layout_constraintBottom_toTopOf="@id/app_footer"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="0dp"
+            android:layout_weight="8.5"/>
 
         <LinearLayout
             android:id="@+id/app_footer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
 
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
@@ -119,8 +114,10 @@
 
                 android:src="@drawable/homepage_history"/>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_View"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:maxWidth="200dp"

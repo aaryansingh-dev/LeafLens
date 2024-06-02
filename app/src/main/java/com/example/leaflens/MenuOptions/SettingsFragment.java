@@ -71,14 +71,15 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        nameEdit = requireView().findViewById(R.id.settings_NameEditText);
-        emailEdit = requireView().findViewById(R.id.settings_EmailEditText);
-        dobEdit = requireView().findViewById(R.id.settings_DOBEditText);
+        nameEdit = view.findViewById(R.id.settings_NameEditText);
+        emailEdit = view.findViewById(R.id.settings_EmailEditText);
+        dobEdit = view.findViewById(R.id.settings_DOBEditText);
 
         initDatePickerClick(dobEdit);
 
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return view;
     }
 
     public void initDatePickerClick(TextView textView)
