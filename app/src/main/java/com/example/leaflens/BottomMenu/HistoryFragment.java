@@ -26,6 +26,9 @@ public class HistoryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+
+
     public HistoryFragment() {
         // Required empty public constructor
     }

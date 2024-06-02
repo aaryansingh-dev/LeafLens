@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.leaflens.BottomMenu.HistoryFragment;
 import com.example.leaflens.MenuOptions.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageView menuProfile;
     ImageView homepageButton;
+    ImageView historyButton;
     DrawerLayout navigationDrawer;
 
     @Override
@@ -40,9 +42,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // initializing bottom buttons
 
         homepageButton = findViewById(R.id.app_footer_home);
+        historyButton = findViewById(R.id.app_footer_history);
 
         // bottom button listeners
         initialiseClickListeners(homepageButton);
+        initialiseClickListeners(historyButton);
 
         menuProfile = findViewById(R.id.app_header_profileImage);
         navigationDrawer = findViewById(R.id.navigation_menu_drawerLayout);
@@ -99,6 +103,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     {
                         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
+                }
+                else if(view.getId() == R.id.app_footer_history && !(currentFragment instanceof HistoryFragment))
+                {
+                    openFragment(new HistoryFragment());
                 }
             }
         });
