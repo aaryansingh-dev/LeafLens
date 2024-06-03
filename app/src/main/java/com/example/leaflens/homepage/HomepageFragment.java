@@ -1,15 +1,19 @@
-package com.example.leaflens;
+package com.example.leaflens.homepage;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.leaflens.FirebaseManager;
+import com.example.leaflens.R;
+import com.example.leaflens.entity.News;
 
 import java.util.ArrayList;
 
@@ -26,15 +30,17 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     ListView updateListView;
-    ArrayList<String> updateList;
+    private ArrayList<News> newsList;
+    private NewsArrayAdapter newsArrayAdapter;
     TextView noUpdateTextView;
+
+    FirebaseManager dbManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public HomepageFragment() {
-        // Required empty public constructor
     }
 
     /**
@@ -62,6 +68,7 @@ public class HomepageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dbManager = new FirebaseManager();
     }
 
     @Override
@@ -73,14 +80,27 @@ public class HomepageFragment extends Fragment {
         updateListView = view.findViewById(R.id.homepage_expert_update_ListView);
         TextView noUpdateText = view.findViewById(R.id.homepage_expert_noUpdate_text);
 
+        newsList = new ArrayList<>();
+        newsArrayAdapter = new NewsArrayAdapter(requireContext(), newsList);
+        updateListView.setAdapter(newsArrayAdapter);
 
-        updateList = new ArrayList<>();
-        if(updateList.size() == 0)
-        {
-            updateListView.setVisibility(View.INVISIBLE);
-            noUpdateText.setVisibility(View.VISIBLE);
-        }
-
+        populateNewsList(noUpdateText);
         return view;
     }
+
+    private void populateNewsList(TextView noUpdateTextView)
+    {
+        dbManager.fetchNews(newsList, new FirebaseManager.fetchNewsListener() {
+            @Override
+            public void onNewsFetched(ArrayList<News> newsNewList) {
+                if(newsNewList.size() == 0)
+                {
+                    updateListView.setVisibility(View.INVISIBLE);
+                    noUpdateTextView.setVisibility(View.VISIBLE);
+                }
+                newsArrayAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
 }

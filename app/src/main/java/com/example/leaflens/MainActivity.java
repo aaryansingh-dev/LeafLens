@@ -7,12 +7,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,9 +18,8 @@ import android.widget.Toast;
 import com.example.leaflens.BottomMenu.HistoryFragment;
 import com.example.leaflens.MenuOptions.SettingsFragment;
 import com.example.leaflens.entity.Profile;
+import com.example.leaflens.homepage.HomepageFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
