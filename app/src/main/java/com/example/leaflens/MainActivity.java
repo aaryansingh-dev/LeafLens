@@ -10,15 +10,21 @@ import androidx.fragment.app.FragmentManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.leaflens.BottomMenu.HistoryFragment;
 import com.example.leaflens.MenuOptions.SettingsFragment;
+import com.example.leaflens.entity.Profile;
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView historyButton;
     ImageView scanButton;
     DrawerLayout navigationDrawer;
+
+    Profile userProfile;    // user profile
 
     private String deviceID;
     private FirebaseManager dbManager;
@@ -50,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // initializing navigation view
         NavigationView navigationView = findViewById(R.id.navigation_View);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // getting user details and setting fields
+        View headerMenu = navigationView.getHeaderView(0);
+        TextView nameView = headerMenu.findViewById(R.id.menu_nameView);
+        fetchUserDetails(nameView);
 
         // initializing bottom buttons
         homepageButton = findViewById(R.id.app_footer_home);
@@ -94,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(itemId == R.id.menu_settings)
         {
             if(!(currentFragment instanceof SettingsFragment))
-                openFragment(SettingsFragment.newInstance(deviceID));
+                openFragment(new SettingsFragment(deviceID, userProfile));
         }
         navigationDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -126,6 +139,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 {
                     openFragment(new HistoryFragment());
                 }
+            }
+        });
+    }
+
+
+    private void fetchUserDetails(TextView nameView)
+    {
+        dbManager.fetchProfile(deviceID, new FirebaseManager.ProfileFetchListener() {
+            @Override
+            public void onProfileFetched(Profile profile) {
+                userProfile = profile;
+                if(profile != null)
+                    nameView.setText(profile.getName());
+                else
+                    nameView.setText("Guest");
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(getBaseContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -39,6 +39,8 @@ public class SettingsFragment extends Fragment {
     private String deviceID;
     private FirebaseManager dbManager;
 
+    private Profile profile;
+
     EditText nameEdit;
     EditText emailEdit;
     TextView dobEdit;
@@ -47,24 +49,10 @@ public class SettingsFragment extends Fragment {
     Button cancelButton;
     Button saveButton;
 
-    public SettingsFragment() {
+    public SettingsFragment(String deviceID, Profile profile) {
+        this.deviceID = deviceID;
+        this.profile = profile;
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param deviceId Parameter 1.
-     * @return A new instance of fragment SettingsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String deviceId){
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, deviceId);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -122,29 +110,19 @@ public class SettingsFragment extends Fragment {
 
     private void fetchDetails()
     {
-        dbManager.fetchProfile(deviceID, new FirebaseManager.ProfileFetchListener() {
-            @Override
-            public void onProfileFetched(Profile profile) {
-                if(profile != null)
-                {
-                    if(profile.getName() != null){
-                        Log.e("User Details", profile.getName());
-                        nameEdit.setText(profile.getName());
-                    }
-                    if(profile.getEmail() != null)
-                        emailEdit.setText(profile.getEmail());
-                    if(profile.getDOB() != null)
-                        dobEdit.setText(profile.getDOB());
-                    if(profile.getPhoneNumber() != null)
-                        phoneEdit.setText(profile.getPhoneNumber());
-                }
+        if(profile != null)
+        {
+            if(profile.getName() != null){
+                Log.e("User Details", profile.getName());
+                nameEdit.setText(profile.getName());
             }
-
-            @Override
-            public void onFailure(String error) {
-                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
-            }
-        });
+            if(profile.getEmail() != null)
+                emailEdit.setText(profile.getEmail());
+            if(profile.getDOB() != null)
+                dobEdit.setText(profile.getDOB());
+            if(profile.getPhoneNumber() != null)
+                phoneEdit.setText(profile.getPhoneNumber());
+        }
     }
 
     private void saveDetails()
