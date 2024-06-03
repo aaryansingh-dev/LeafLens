@@ -7,14 +7,17 @@ public class Profile {
     String profileImageURL;
     String phoneNumber;
 
+    private String deviceID;
+
     public Profile(){}
 
-    public Profile(String name, String DOB, String email, String phoneNumber)
+    public Profile(String deviceID, String name, String DOB, String email, String phoneNumber, String imageURL)
     {
+        this.deviceID = deviceID;
         this.name = name;
         this.DOB = DOB;
         this.email = email;
-        this.profileImageURL = null;
+        this.profileImageURL = imageURL;
         this.phoneNumber = phoneNumber;
     }
 
@@ -65,6 +68,16 @@ public class Profile {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public void addDeviceId(String id)
+    {
+        this.deviceID = id;
+    }
+
+    public String getDeviceID()
+    {
+        return this.deviceID;
     }
 }
 

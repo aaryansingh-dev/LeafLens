@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "713323122981",
+    "project_id": "leaflens-45abe",
+    "storage_bucket": "leaflens-45abe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713323122981:android:e6aa21b1a0798136254acc",
+        "android_client_info": {
+          "package_name": "com.example.leaflens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC76DzYUGxuZpbFIDhLFycsWQoBzL3oHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

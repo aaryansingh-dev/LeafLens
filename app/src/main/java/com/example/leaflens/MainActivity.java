@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView historyButton;
     DrawerLayout navigationDrawer;
 
+    private String deviceID;
+    private FirebaseManager dbManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +41,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .commit();
         }
 
+        // getting deviceID
+        deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        dbManager = new FirebaseManager();
+
+        // initializing navigation view
         NavigationView navigationView = findViewById(R.id.navigation_View);
         navigationView.setNavigationItemSelectedListener(this);
 
         // initializing bottom buttons
-
         homepageButton = findViewById(R.id.app_footer_home);
         historyButton = findViewById(R.id.app_footer_history);
 
@@ -48,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initialiseClickListeners(homepageButton);
         initialiseClickListeners(historyButton);
 
+        // initializing menu functionality
         menuProfile = findViewById(R.id.app_header_profileImage);
         navigationDrawer = findViewById(R.id.navigation_menu_drawerLayout);
         setMenuClickListener(menuProfile);
@@ -80,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(itemId == R.id.menu_settings)
         {
             if(!(currentFragment instanceof SettingsFragment))
-                openFragment(new SettingsFragment());
+                openFragment(SettingsFragment.newInstance(deviceID));
         }
         navigationDrawer.closeDrawer(GravityCompat.START);
         return true;
