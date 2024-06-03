@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.leaflens.BottomMenu.HistoryFragment;
 import com.example.leaflens.MenuOptions.SettingsFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView menuProfile;
     ImageView homepageButton;
     ImageView historyButton;
+    ImageView scanButton;
     DrawerLayout navigationDrawer;
 
     private String deviceID;
@@ -52,10 +54,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // initializing bottom buttons
         homepageButton = findViewById(R.id.app_footer_home);
         historyButton = findViewById(R.id.app_footer_history);
+        scanButton = findViewById(R.id.app_footer_scan);
 
         // bottom button listeners
         initialiseClickListeners(homepageButton);
         initialiseClickListeners(historyButton);
+        initialiseClickListeners(scanButton);
 
         // initializing menu functionality
         menuProfile = findViewById(R.id.app_header_profileImage);
@@ -113,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     {
                         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
+                }
+                else if(view.getId() == R.id.app_footer_scan)
+                {
+                    Toast.makeText(getApplicationContext(), "In development", Toast.LENGTH_SHORT).show();
                 }
                 else if(view.getId() == R.id.app_footer_history && !(currentFragment instanceof HistoryFragment))
                 {
