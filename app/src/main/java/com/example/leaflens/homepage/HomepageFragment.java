@@ -3,6 +3,7 @@ package com.example.leaflens.homepage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -10,12 +11,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
+import com.example.leaflens.SearchResultFragment;
 import com.example.leaflens.entity.News;
 
 import java.util.ArrayList;
@@ -92,7 +95,10 @@ public class HomepageFragment extends Fragment {
         newsArrayAdapter = new NewsArrayAdapter(requireContext(), newsList);
         updateListView.setAdapter(newsArrayAdapter);
 
+        searchEdit = view.findViewById(R.id.homepage_search_editText);
+
         populateNewsList(noUpdateText);
+        initializeSearchbar(searchEdit);
         return view;
     }
 
@@ -113,11 +119,38 @@ public class HomepageFragment extends Fragment {
 
     private void initializeSearchbar(EditText searchEdit)
     {
+        Log.d("Homepage", "Initializing Search bar");
         searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN))
+                {
+                    String query = searchEdit.getText().toString().trim();
+                    if(!query.isEmpty())
+                    {
+                        openSearchResultFragment(query);
+                        searchEdit.setText("");
+                    }
+                    return true;
+                }
                 return false;
             }
         });
+    }
+
+    private void openSearchResultFragment(String query)
+    {
+        Log.d("Transaction-Homepage", "Attempting to open SearchResultFragment");
+        Bundle bundle = new Bundle();
+        bundle.putString("query", query);
+
+        // start transaction for result page
+        SearchResultFragment searchResultFragment = new SearchResultFragment();
+        searchResultFragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.dynamic_container, searchResultFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
