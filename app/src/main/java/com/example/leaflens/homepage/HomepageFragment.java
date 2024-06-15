@@ -3,11 +3,14 @@ package com.example.leaflens.homepage;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,10 +32,15 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
+    // variables for news feature
     ListView updateListView;
     private ArrayList<News> newsList;
     private NewsArrayAdapter newsArrayAdapter;
     TextView noUpdateTextView;
+
+    // variables for search feature
+    private EditText searchEdit;
 
     FirebaseManager dbManager;
 
@@ -103,4 +111,13 @@ public class HomepageFragment extends Fragment {
         });
     }
 
+    private void initializeSearchbar(EditText searchEdit)
+    {
+        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                return false;
+            }
+        });
+    }
 }
