@@ -6,6 +6,7 @@ public class Disease {
 
     private String name;
     private String severity;
+    private String diseaseCategory;
     private ArrayList<String> symptoms;
     private ArrayList<String> treatments;
 
@@ -60,5 +61,15 @@ public class Disease {
 
     public ArrayList<String> getTreatments(){
         return this.treatments;
+    }
+
+    public void setDiseaseCategory(String category)
+    {
+        diseaseCategory = category;
+    }
+
+    public String getDiseaseCategory()
+    {
+        return this.diseaseCategory;
     }
 }
