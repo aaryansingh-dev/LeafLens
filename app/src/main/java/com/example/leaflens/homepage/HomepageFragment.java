@@ -79,7 +79,7 @@ public class HomepageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        dbManager = new FirebaseManager();
+        dbManager = FirebaseManager.getInstance();
     }
 
     @Override

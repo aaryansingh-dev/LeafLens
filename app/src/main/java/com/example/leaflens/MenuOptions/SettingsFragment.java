@@ -28,7 +28,6 @@ import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
@@ -61,7 +60,7 @@ public class SettingsFragment extends Fragment {
         if (getArguments() != null) {
             deviceID = getArguments().getString(ARG_PARAM1);
         }
-        dbManager = new FirebaseManager();
+        dbManager = FirebaseManager.getInstance();
     }
 
     @Override

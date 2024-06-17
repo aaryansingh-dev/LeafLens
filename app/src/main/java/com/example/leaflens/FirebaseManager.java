@@ -26,9 +26,16 @@ import java.util.HashMap;
 public class FirebaseManager{
 
     private FirebaseFirestore db;
-    public FirebaseManager()
+
+    private static final FirebaseManager instance = new FirebaseManager();
+    private FirebaseManager()
     {
         this.db = FirebaseFirestore.getInstance();
+    }
+
+    public static FirebaseManager getInstance()
+    {
+        return instance;
     }
 
     public void addProfile(Profile profile)

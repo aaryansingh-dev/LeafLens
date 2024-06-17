@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // getting deviceID
         deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        dbManager = new FirebaseManager();
+        dbManager = FirebaseManager.getInstance();
 
         // initializing navigation view
         NavigationView navigationView = findViewById(R.id.navigation_View);
