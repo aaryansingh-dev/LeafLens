@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
-import com.example.leaflens.SearchResultFragment;
+import com.example.leaflens.Search.SearchResultFragment;
 import com.example.leaflens.entity.News;
 
 import java.util.ArrayList;
