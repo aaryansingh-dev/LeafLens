@@ -4,14 +4,17 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
 import com.example.leaflens.entity.Disease;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -24,9 +27,11 @@ public class SearchResultFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "query";
 
+    private FirebaseManager firebaseManager;
     private String query;
     private ListView searchListView;
     private ArrayList<Disease> diseaseArrayList;
+    private SearchArrayAdapter searchArrayAdapter;
 
 
     public SearchResultFragment() {
@@ -55,6 +60,9 @@ public class SearchResultFragment extends Fragment {
         if (getArguments() != null) {
             query = getArguments().getString(ARG_PARAM1);
         }
+        firebaseManager = FirebaseManager.getInstance();
+        diseaseArrayList = new ArrayList<>();
+        searchArrayAdapter = new SearchArrayAdapter(requireContext(), diseaseArrayList);
     }
 
     @Override
@@ -64,8 +72,27 @@ public class SearchResultFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_search_result, container, false);
         TextView searchQuery = view.findViewById(R.id.SearchResult_queryPassed);
 
+        searchListView = view.findViewById(R.id.SearchResult_searchListView);
+        searchListView.setAdapter(searchArrayAdapter);
+
+        //starting search
+        getRelevantSearchList();
+
         searchQuery.setText(query);
 
         return view;
+    }
+
+    public void getRelevantSearchList()
+    {
+        Log.d("SearchFragment", "Starting search call from firebase");
+        firebaseManager.fetchRelevantSearchDiseases(query, diseaseArrayList, new FirebaseManager.OnSearchListFetchListener() {
+            @Override
+            public void onListFetched(ArrayList<Disease> diseaseList) {
+                diseaseArrayList = diseaseList;
+                searchArrayAdapter.notifyDataSetChanged();
+                Log.e("SearchFragment", Integer.toString(diseaseList.size()));
+            }
+        });
     }
 }

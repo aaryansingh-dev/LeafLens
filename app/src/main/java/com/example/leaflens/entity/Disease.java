@@ -7,6 +7,7 @@ public class Disease {
     private String name;
     private String severity;
     private String diseaseCategory;
+    private String description;
     private ArrayList<String> symptoms;
     private ArrayList<String> treatments;
 
@@ -71,5 +72,15 @@ public class Disease {
     public String getDiseaseCategory()
     {
         return this.diseaseCategory;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public String getDescription()
+    {
+        return description;
     }
 }

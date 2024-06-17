@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.leaflens.entity.Disease;
 import com.example.leaflens.entity.News;
 import com.example.leaflens.entity.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.security.DigestException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -122,5 +124,44 @@ public class FirebaseManager{
                     }
                 }
             });
+        }
+
+        public interface OnSearchListFetchListener
+        {
+            public void onListFetched(ArrayList<Disease> diseaseList);
+        }
+
+        public void fetchRelevantSearchDiseases(String query, ArrayList<Disease> diseaseArrayList, OnSearchListFetchListener callback)
+        {
+            Log.d("Firestore - search", "Starting search: " + query);
+            query = query.trim();
+
+            db.collection("diseases")
+                    .orderBy("Name")
+                    .startAt(query)
+                    .endAt(query + "\uf8ff")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful() && task.getResult() != null)
+                        {
+                            Log.d("Firestore - search", "Task successful, documents found: " + task.getResult().size());
+                            diseaseArrayList.clear();
+                            for(QueryDocumentSnapshot document : task.getResult())
+                            {
+                                String name = document.getString("Name");
+                                String severity = document.getString("Severity");
+                                String diseaseCategory = document.getString("disease_category");
+
+                                Disease disease = new Disease(name, severity);
+                                disease.setDiseaseCategory(diseaseCategory);
+
+                                Log.d("Firestore - search", "Document found: " + document.getId() + " Name: " + name);
+                                diseaseArrayList.add(disease);
+                                Log.e("Firestore-search", disease.getName());
+                            }
+                        }
+                        Log.d("Firestore - search", "Starting callback");
+                        callback.onListFetched(diseaseArrayList);
+                    });
         }
 }

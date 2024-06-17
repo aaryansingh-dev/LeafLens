@@ -13,9 +13,12 @@ import androidx.annotation.Nullable;
 import com.example.leaflens.R;
 import com.example.leaflens.entity.Disease;
 
+import java.security.DigestException;
+import java.util.ArrayList;
+
 public class SearchArrayAdapter extends ArrayAdapter<Disease> {
-    public SearchArrayAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
+    public SearchArrayAdapter(@NonNull Context context, ArrayList<Disease> arrayList) {
+        super(context, 0, arrayList);
     }
 
     @NonNull
@@ -34,9 +37,12 @@ public class SearchArrayAdapter extends ArrayAdapter<Disease> {
         TextView diseaseName = view.findViewById(R.id.search_result_item_Title);
         TextView diseaseCategory = view.findViewById(R.id.search_result_item_Disease_Category);
 
-        severityText.setText(currentDisease.getSeverity());
-        diseaseName.setText(currentDisease.getName());
-        diseaseCategory.setText(currentDisease.getDiseaseCategory());
+        if(currentDisease != null)
+        {
+            severityText.setText(currentDisease.getSeverity());
+            diseaseName.setText(currentDisease.getName());
+            diseaseCategory.setText(currentDisease.getDiseaseCategory());
+        }
 
         return view;
     }
