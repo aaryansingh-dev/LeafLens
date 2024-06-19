@@ -13,8 +13,7 @@ import android.widget.TextView;
 
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
-import com.example.leaflens.entity.Disease;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.leaflens.Entity.Disease;
 
 import java.util.ArrayList;
 

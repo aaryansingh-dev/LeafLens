@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.leaflens.BottomMenu.HistoryFragment;
 import com.example.leaflens.MenuOptions.SettingsFragment;
-import com.example.leaflens.entity.Profile;
+import com.example.leaflens.Entity.Profile;
 import com.example.leaflens.homepage.HomepageFragment;
 import com.google.android.material.navigation.NavigationView;
 

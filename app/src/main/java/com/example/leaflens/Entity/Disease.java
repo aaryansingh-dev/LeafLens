@@ -1,4 +1,4 @@
-package com.example.leaflens.entity;
+package com.example.leaflens.Entity;
 
 import java.util.ArrayList;
 
