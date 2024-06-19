@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MenuOptions.SettingsFragment">
 
     <LinearLayout
@@ -155,10 +156,14 @@
                 android:paddingStart="5dp"/>
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="250dp"
             android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="125dp"
+            app:riv_border_width="2dp"
 
+            android:layout_gravity="center"
             android:src="@drawable/profile_image"
 
             android:layout_margin="20dp"

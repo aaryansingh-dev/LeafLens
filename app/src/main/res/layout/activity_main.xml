@@ -26,12 +26,13 @@
             android:background="#61BF51">
 
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/app_header_profileImage"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_height="0dp"
                 app:layout_constraintHeight_percent="0.7"
-                android:background="@drawable/image_rounded_background"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="25dp"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
