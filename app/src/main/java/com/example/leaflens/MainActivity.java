@@ -1,14 +1,28 @@
 package com.example.leaflens;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +35,20 @@ import com.example.leaflens.Entity.Profile;
 import com.example.leaflens.homepage.HomepageFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int PERMISSIONS_REQUEST = 100;
+    private static final int REQUEST_IMAGE_CAPTURE = 102;
+    private static final int REQUEST_IMAGE_CROP = 2;
+    private Uri photoURI;
 
     ImageView menuProfile;
     ImageView homepageButton;
@@ -128,7 +155,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 else if(view.getId() == R.id.app_footer_scan)
                 {
-                    Toast.makeText(getApplicationContext(), "In development", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "In development", Toast.LENGTH_SHORT).show();
+                    launchCamera();
+
                 }
                 else if(view.getId() == R.id.app_footer_history && !(currentFragment instanceof HistoryFragment))
                 {
@@ -156,5 +185,106 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(getBaseContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void launchCamera()
+    {
+        // checking for permission
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // asking for permission
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST);
+        }
+        else
+        {
+            startClickImageIntent();
+        }
+    }
+    private void startClickImageIntent()
+    {
+        Intent clickImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if(clickImageIntent.resolveActivity(getPackageManager()) != null)
+        {
+            startActivityForResult(clickImageIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
+    private File createPhotoFile() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_"+timeStamp+"_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException ex) {
+            // Handle the error
+            ex.printStackTrace();
+        }
+
+        return image;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
+        {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            photoURI = getImageUri(this, imageBitmap);
+            cropImage(photoURI);
+        } else if (requestCode == REQUEST_IMAGE_CROP && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap bitmap = extras.getParcelable("data");
+            Toast.makeText(getApplicationContext(), "Image Cropped", Toast.LENGTH_SHORT).show();
+            // pass data to ML model
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSIONS_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, launch camera intent
+                startClickImageIntent();
+            } else {
+                // Permission denied, handle accordingly (e.g., show a message or request again)
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void cropImage(Uri imageURI)
+    {
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        cropIntent.setDataAndType(imageURI, "image/*");
+        cropIntent.putExtra("crop", "true");
+        cropIntent.putExtra("aspectX", 1);
+        cropIntent.putExtra("aspectY", 1);
+        cropIntent.putExtra("outputX", 256);
+        cropIntent.putExtra("outputY", 256);
+        cropIntent.putExtra("return-data", true);
+        startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
+    }
+
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_"+timeStamp+"_";
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, imageFileName, null);
+        return Uri.parse(path);
     }
 }
