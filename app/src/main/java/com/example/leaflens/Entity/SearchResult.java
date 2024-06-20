@@ -1,7 +1,6 @@
-package com.example.leaflens.entity;
+package com.example.leaflens.Entity;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 
 import java.util.Date;
 

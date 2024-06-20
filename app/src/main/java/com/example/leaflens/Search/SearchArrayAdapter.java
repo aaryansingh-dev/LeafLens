@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.leaflens.R;
-import com.example.leaflens.entity.Disease;
+import com.example.leaflens.Entity.Disease;
 
-import java.security.DigestException;
 import java.util.ArrayList;
 
 public class SearchArrayAdapter extends ArrayAdapter<Disease> {

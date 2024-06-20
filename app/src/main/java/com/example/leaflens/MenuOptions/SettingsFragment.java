@@ -2,13 +2,11 @@ package com.example.leaflens.MenuOptions;
 
 import android.app.DatePickerDialog;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +15,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
-import com.example.leaflens.entity.Profile;
+import com.example.leaflens.Entity.Profile;
 
 import java.util.Calendar;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.

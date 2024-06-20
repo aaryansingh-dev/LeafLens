@@ -1,7 +1,6 @@
 package com.example.leaflens.homepage;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.leaflens.R;
-import com.example.leaflens.entity.News;
+import com.example.leaflens.Entity.News;
 
 import java.util.ArrayList;
 

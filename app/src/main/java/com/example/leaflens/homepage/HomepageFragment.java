@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
 import com.example.leaflens.Search.SearchResultFragment;
-import com.example.leaflens.entity.News;
+import com.example.leaflens.Entity.News;
 
 import java.util.ArrayList;
 

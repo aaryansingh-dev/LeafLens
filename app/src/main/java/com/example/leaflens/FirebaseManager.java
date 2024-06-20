@@ -5,9 +5,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.leaflens.entity.Disease;
-import com.example.leaflens.entity.News;
-import com.example.leaflens.entity.Profile;
+import com.example.leaflens.Entity.Disease;
+import com.example.leaflens.Entity.News;
+import com.example.leaflens.Entity.Profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.security.DigestException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
