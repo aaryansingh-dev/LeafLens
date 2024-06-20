@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.leaflens.Entity.Profile;
@@ -35,7 +37,10 @@ import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -223,7 +228,16 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivityForResult(pickPhoto, REQUEST_IMAGE_PICK);
             } else if (options[item].equals("Take Photo")) {
                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
+                if(takePicture.resolveActivity(getPackageManager()) != null)
+                {
+                    File photoFile = createFile();
+                    if(photoFile != null)
+                    {
+                        Uri photoUri = FileProvider.getUriForFile(this, "com.e xample.leaflens.profilePicProvider", photoFile);
+                        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                        startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
+                    }
+                }
             }
         });
         builder.show();
@@ -300,5 +314,26 @@ public class SettingsActivity extends AppCompatActivity {
         options.setCircleDimmedLayer(true);
         options.setShowCropGrid(false);
         return options;
+    }
+
+    private File createFile()
+    {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try{
+            image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 }
