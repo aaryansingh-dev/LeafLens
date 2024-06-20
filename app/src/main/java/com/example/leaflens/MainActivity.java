@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (clickImageIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = createPhotoFile();
-            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider", photoFile);
+            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider.scan", photoFile);
             clickImageIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             clickImageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(clickImageIntent, REQUEST_IMAGE_CAPTURE);
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider", new File(currentPhotoPath));
+            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider.scan", new File(currentPhotoPath));
             Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
             // saving uncropped Image and cropping the image
             //saveImage(imageBitmap);

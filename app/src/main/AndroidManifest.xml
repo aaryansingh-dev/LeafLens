@@ -43,21 +43,12 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.leaflens.provider"
+            android:authorities="com.example.leaflens.provider.scan"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.leaflens.profilePicProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_profile" />
+                android:resource="@xml/file_paths_scan" />
         </provider>
     </application>
 

@@ -29,6 +29,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.leaflens.Entity.Profile;
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
@@ -62,6 +64,8 @@ public class SettingsActivity extends AppCompatActivity {
     Button cancelButton;
     Button saveButton;
     private RoundedImageView profilePictureView;
+
+    Uri photoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -233,7 +237,7 @@ public class SettingsActivity extends AppCompatActivity {
                     File photoFile = createFile();
                     if(photoFile != null)
                     {
-                        Uri photoUri = FileProvider.getUriForFile(this, "com.e xample.leaflens.profilePicProvider", photoFile);
+                        photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider.scan", photoFile);
                         takePicture.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                         startActivityForResult(takePicture, REQUEST_IMAGE_CAPTURE);
                     }
@@ -254,13 +258,23 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 imageUri = data.getData();
             }
-            else if(requestCode == REQUEST_IMAGE_CAPTURE && data != null)
+            else if(requestCode == REQUEST_IMAGE_CAPTURE)
             {
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                imageUri = getImageUri(this, imageBitmap);
-                //cropImageCircle(imageUri);
-
+                imageUri = photoUri;
+                addImageToGallery(imageUri);
+                Log.d("Settings-URI", "Image uri is "+ imageUri.toString());
             }
+            else if (requestCode == UCrop.REQUEST_CROP && data !=null) {
+                final Uri resultUri = UCrop.getOutput(data);
+                if(resultUri != null)
+                {
+                    RequestOptions requestOptions = new RequestOptions().circleCrop();
+                    Glide.with(this).load(resultUri).apply(requestOptions).into(profilePictureView);
+                }
+            }
+
+            if(imageUri != null)
+                cropImageCircle(imageUri);
         }
     }
 
@@ -335,5 +349,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return image;
+    }
+
+    private void addImageToGallery(Uri imageUri) {
+        Log.d("Settings - Saving", "Saving image to gallery");
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(imageUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 }
