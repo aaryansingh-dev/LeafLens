@@ -46,6 +46,7 @@ dependencies {
     implementation ("androidx.fragment:fragment:1.8.0")
 
     implementation ("com.makeramen:roundedimageview:2.3.0")
+    implementation ("com.github.yalantis:ucrop:2.2.8")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

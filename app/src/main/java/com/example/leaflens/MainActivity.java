@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private File createPhotoFile() {
+    public File createPhotoFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
