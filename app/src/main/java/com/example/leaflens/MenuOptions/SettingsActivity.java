@@ -3,33 +3,26 @@ package com.example.leaflens.MenuOptions;
 import android.app.DatePickerDialog;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
+import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.leaflens.Entity.Profile;
 import com.example.leaflens.FirebaseManager;
 import com.example.leaflens.R;
-import com.example.leaflens.Entity.Profile;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
-public class SettingsFragment extends Fragment {
+public class SettingsActivity extends AppCompatActivity {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "deviceId";
 
     private String deviceID;
     private FirebaseManager dbManager;
@@ -44,39 +37,28 @@ public class SettingsFragment extends Fragment {
     Button cancelButton;
     Button saveButton;
 
-    public SettingsFragment(String deviceID, Profile profile) {
-        this.deviceID = deviceID;
-        this.profile = profile;
-        // Required empty public constructor
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            deviceID = getArguments().getString(ARG_PARAM1);
-        }
+        setContentView(R.layout.activity_settings);
+
+        nameEdit = findViewById(R.id.settings_NameEditText);
+        emailEdit = findViewById(R.id.settings_EmailEditText);
+        dobEdit = findViewById(R.id.settings_DOBEditText);
+        phoneEdit = findViewById(R.id.settings_phoneEditText);
+        cancelButton = findViewById(R.id.settings_cancelButton);
+        saveButton = findViewById(R.id.settings_saveButton);
+
         dbManager = FirebaseManager.getInstance();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
-        nameEdit = view.findViewById(R.id.settings_NameEditText);
-        emailEdit = view.findViewById(R.id.settings_EmailEditText);
-        dobEdit = view.findViewById(R.id.settings_DOBEditText);
-        phoneEdit = view.findViewById(R.id.settings_phoneEditText);
-        cancelButton = view.findViewById(R.id.settings_cancelButton);
-        saveButton = view.findViewById(R.id.settings_saveButton);
+        deviceID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        profile = (Profile) getIntent().getSerializableExtra("profile");
 
         fetchDetails();
         initDatePickerClick(dobEdit);
         initializeButtons(cancelButton);
         initializeButtons(saveButton);
 
-        return view;
     }
 
     public void initDatePickerClick(TextView textView)
@@ -91,7 +73,7 @@ public class SettingsFragment extends Fragment {
     private void initDatePicker(TextView editText)
     {
         String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        DatePickerDialog datePicker = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePicker = new DatePickerDialog(getBaseContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String monthWord = monthNames[month];
@@ -158,7 +140,8 @@ public class SettingsFragment extends Fragment {
         {
             Profile profile = new Profile(deviceID, name, dob, email, phone, null);
             dbManager.addProfile(profile);
-            requireActivity().getSupportFragmentManager().popBackStack();
+            Toast.makeText(this, "Profile saved", Toast.LENGTH_LONG).show();
+            Log.d("Settings Activity", "Profile saved");
         }
         return;
     }
@@ -170,15 +153,16 @@ public class SettingsFragment extends Fragment {
 
     private void initializeButtons(Button button)
     {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
         if(button.getId() == R.id.settings_cancelButton) {
-           button.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   fragmentManager.popBackStack();
-               }
-           });
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d("Settings Activity", "Ending settings activity");
+                    finish();
+                }
+            });
         }
         else
         {
