@@ -30,6 +30,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.leaflens.Entity.Profile;
 import com.example.leaflens.FirebaseManager;
@@ -268,7 +269,7 @@ public class SettingsActivity extends AppCompatActivity {
                 final Uri resultUri = UCrop.getOutput(data);
                 if(resultUri != null)
                 {
-                    RequestOptions requestOptions = new RequestOptions().circleCrop();
+                    RequestOptions requestOptions = new RequestOptions().circleCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE);
                     Glide.with(this).load(resultUri).apply(requestOptions).into(profilePictureView);
                 }
             }
