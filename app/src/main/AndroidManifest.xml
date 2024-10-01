@@ -14,9 +14,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.LeafLens"
         tools:targetApi="31">
@@ -31,14 +31,24 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity android:name=".MenuOptions.SettingsActivity"
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.leaflens.provider"
+            android:authorities="com.example.leaflens.provider.scan"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths_scan" />
         </provider>
     </application>
 

@@ -1,6 +1,8 @@
 package com.example.leaflens.Entity;
 
-public class Profile {
+import java.io.Serializable;
+
+public class Profile implements Serializable{
     String name;
     String DOB;
     String email;

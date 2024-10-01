@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,17 +29,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.leaflens.BottomMenu.HistoryFragment;
-import com.example.leaflens.MenuOptions.SettingsFragment;
 import com.example.leaflens.Entity.Profile;
+import com.example.leaflens.MenuOptions.SettingsActivity;
 import com.example.leaflens.homepage.HomepageFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -126,8 +121,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.dynamic_container);
 
         if (itemId == R.id.menu_settings) {
-            if (!(currentFragment instanceof SettingsFragment))
-                openFragment(new SettingsFragment(deviceID, userProfile));
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            settingsIntent.putExtra("profile", userProfile);
+            startActivity(settingsIntent);
         }
         navigationDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -195,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (clickImageIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = createPhotoFile();
-            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider", photoFile);
+            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider.scan", photoFile);
             clickImageIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             clickImageIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(clickImageIntent, REQUEST_IMAGE_CAPTURE);
@@ -227,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider", new File(currentPhotoPath));
+            Uri photoUri = FileProvider.getUriForFile(this, "com.example.leaflens.provider.scan", new File(currentPhotoPath));
             Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
             // saving uncropped Image and cropping the image
             //saveImage(imageBitmap);
